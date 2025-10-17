@@ -1,0 +1,53 @@
+package me.amirkazemzade.myshatelmobilewidget.di
+
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
+import me.amirkazemzade.myshatelmobilewidget.data.api.AuthApi
+import me.amirkazemzade.myshatelmobilewidget.data.api.PackagesApi
+import me.amirkazemzade.myshatelmobilewidget.data.repositories.AuthRepositoryImpl
+import me.amirkazemzade.myshatelmobilewidget.data.repositories.PackagesRepositoryImpl
+import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
+import me.amirkazemzade.myshatelmobilewidget.domain.repositories.PackagesRepository
+import okhttp3.MediaType.Companion.toMediaType
+import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+class AppModule {
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(): Retrofit =
+        Retrofit
+            .Builder()
+            .addConverterFactory(
+                Json.asConverterFactory(
+                    "application/json; charset=UTF8".toMediaType()
+                )
+            )
+            .baseUrl("https://my.shatelmobile.ir/")
+            .build()
+
+    @Provides
+    @Singleton
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun providePackageApi(retrofit: Retrofit): PackagesApi =
+        retrofit.create(PackagesApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(authApi: AuthApi): AuthRepository = AuthRepositoryImpl(authApi)
+
+    @Provides
+    @Singleton
+    fun providePackagesRepository(packagesApi: PackagesApi): PackagesRepository =
+        PackagesRepositoryImpl(packagesApi)
+}
