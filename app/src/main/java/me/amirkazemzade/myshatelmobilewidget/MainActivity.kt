@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
-import me.amirkazemzade.myshatelmobilewidget.ui.login.LoginView
+import me.amirkazemzade.myshatelmobilewidget.ui.login.LoginScreen
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
 
 @AndroidEntryPoint
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyShatelMobileWidgetTheme {
-                LoginView()
+                LoginScreen()
             }
         }
     }

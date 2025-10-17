@@ -1,15 +1,20 @@
 package me.amirkazemzade.myshatelmobilewidget.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import me.amirkazemzade.myshatelmobilewidget.data.CookieRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.api.AuthApi
 import me.amirkazemzade.myshatelmobilewidget.data.api.PackagesApi
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.AuthRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.PackagesRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
+import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.PackagesRepository
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
@@ -50,4 +55,14 @@ class AppModule {
     @Singleton
     fun providePackagesRepository(packagesApi: PackagesApi): PackagesRepository =
         PackagesRepositoryImpl(packagesApi)
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
+        context.getSharedPreferences("my_shatel_mobile_widget_prefs", Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    fun provideCookieRepository(sharedPreferences: SharedPreferences): CookieRepository =
+        CookieRepositoryImpl(sharedPreferences)
 }

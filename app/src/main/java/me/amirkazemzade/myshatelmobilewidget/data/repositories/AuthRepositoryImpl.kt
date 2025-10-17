@@ -6,6 +6,7 @@ import me.amirkazemzade.myshatelmobilewidget.data.api.AuthApi
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toCaptchaBase64
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toCookie
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toHeaderValue
+import me.amirkazemzade.myshatelmobilewidget.data.models.requests.LoginWithPasswordBody
 import me.amirkazemzade.myshatelmobilewidget.data.models.requests.RequestLoginBody
 import me.amirkazemzade.myshatelmobilewidget.domain.models.AuthenticatedResult
 import me.amirkazemzade.myshatelmobilewidget.domain.models.CaptchaBase64
@@ -60,9 +61,11 @@ class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : Aut
 
         val response = authApi.login(
             cookie = cookie.toHeaderValue(),
-            username = username,
-            password = password,
-            captchaResult = captchaResult,
+            body = LoginWithPasswordBody(
+                username = username,
+                password = password,
+                captcha = captchaResult,
+            )
         )
 
         if (response.isSuccessful) {

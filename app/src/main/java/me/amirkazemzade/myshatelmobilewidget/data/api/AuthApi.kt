@@ -1,13 +1,13 @@
 package me.amirkazemzade.myshatelmobilewidget.data.api
 
-import me.amirkazemzade.myshatelmobilewidget.data.models.responses.CaptchaResponse
+import me.amirkazemzade.myshatelmobilewidget.data.models.requests.LoginWithPasswordBody
 import me.amirkazemzade.myshatelmobilewidget.data.models.requests.RequestLoginBody
+import me.amirkazemzade.myshatelmobilewidget.data.models.responses.CaptchaResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 
 interface AuthApi {
@@ -25,8 +25,6 @@ interface AuthApi {
     @POST("/login/password")
     suspend fun login(
         @Header("Cookie") cookie: String?,
-        @Query("username") username: String,
-        @Query("password") password: String,
-        @Query("captcha") captchaResult: String,
+        @Body body: LoginWithPasswordBody,
     ): Response<Unit>
 }
