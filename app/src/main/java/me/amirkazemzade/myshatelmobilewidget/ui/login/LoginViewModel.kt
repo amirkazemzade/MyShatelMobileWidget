@@ -62,6 +62,9 @@ class LoginViewModel @Inject constructor(
                 )
             ).collectLatest {
                 _loginRequestState.value = it
+                if (it is RequestStatus.Error) {
+                    fetchCaptcha()
+                }
             }
         }
     }

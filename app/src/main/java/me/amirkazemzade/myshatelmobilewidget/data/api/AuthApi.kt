@@ -3,6 +3,7 @@ package me.amirkazemzade.myshatelmobilewidget.data.api
 import me.amirkazemzade.myshatelmobilewidget.data.models.requests.LoginWithPasswordBody
 import me.amirkazemzade.myshatelmobilewidget.data.models.requests.RequestLoginBody
 import me.amirkazemzade.myshatelmobilewidget.data.models.responses.CaptchaResponse
+import me.amirkazemzade.myshatelmobilewidget.data.models.responses.LoginResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -26,11 +27,16 @@ interface AuthApi {
     suspend fun requestLogin(
         @Header("Cookie") cookie: String?,
         @Body body: RequestLoginBody,
-    ): Response<Unit>
+    ): Response<LoginResponse>
 
     @POST("/login/password")
     suspend fun login(
         @Header("Cookie") cookie: String?,
         @Body body: LoginWithPasswordBody,
+    ): Response<LoginResponse>
+
+    @GET("/")
+    suspend fun home(
+        @Header("Cookie") cookie: String?,
     ): Response<Unit>
 }

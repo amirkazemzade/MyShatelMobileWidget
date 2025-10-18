@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthentication
+import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthenticationException
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepository
@@ -26,7 +26,7 @@ class CheckAuthUseCase @Inject constructor(
 
         authStateFlow.flatMapLatest { (cookie, isLoggedIn) ->
             if (!isLoggedIn || cookie == null) {
-                flowOf(RequestStatus.Error(InvalidAuthentication()))
+                flowOf(RequestStatus.Error(InvalidAuthenticationException()))
             } else {
                 authRepository.checkLoginStatus(cookie)
             }

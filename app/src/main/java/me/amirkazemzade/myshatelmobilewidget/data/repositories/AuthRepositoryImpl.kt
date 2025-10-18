@@ -57,6 +57,11 @@ class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : Aut
             )
         )
         if (response.isSuccessful) {
+            val data = response.body()!!
+            if (!data.ok) {
+                emit(RequestStatus.Error(data.message))
+                return@flow
+            }
             emit(RequestStatus.Success(AuthenticatedResult(Unit, cookie)))
         } else {
             emit(RequestStatus.Error(response.message(), response.code()))
@@ -81,6 +86,14 @@ class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : Aut
         )
 
         if (response.isSuccessful) {
+            val data = response.body()!!
+            if (!data.ok) {
+                emit(RequestStatus.Error(data.message))
+                return@flow
+            }
+
+            authApi.home(cookie.toHeaderValue())
+
             emit(RequestStatus.Success(AuthenticatedResult(Unit, cookie)))
         } else {
             emit(RequestStatus.Error(response.message(), response.code()))

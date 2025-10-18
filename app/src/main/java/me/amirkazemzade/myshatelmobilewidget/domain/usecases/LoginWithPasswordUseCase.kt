@@ -1,7 +1,7 @@
 package me.amirkazemzade.myshatelmobilewidget.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthentication
+import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthenticationException
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepository
@@ -19,7 +19,6 @@ class LoginWithPasswordUseCase @Inject constructor(
         captchaResult: String,
     ): Flow<RequestStatus<Unit>> =
         handleAuthenticatedRequestWithCookie { cookie ->
-            if (cookie == null) throw InvalidAuthentication()
             authRepository.login(cookie, username, password, captchaResult)
         }
 }

@@ -6,6 +6,7 @@ import me.amirkazemzade.myshatelmobilewidget.data.api.PackagesApi
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toHeaderValue
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toPackagesArray
 import me.amirkazemzade.myshatelmobilewidget.data.converters.toRemained
+import me.amirkazemzade.myshatelmobilewidget.data.models.requests.RemainedRequestBody
 import me.amirkazemzade.myshatelmobilewidget.domain.models.AuthenticatedResult
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Cookie
 import me.amirkazemzade.myshatelmobilewidget.domain.models.InternetPackage
@@ -22,19 +23,36 @@ class PackagesRepositoryImpl(private val packagesApi: PackagesApi) : PackagesRep
                 val data = response.body()!!.toPackagesArray()
                 emit(RequestStatus.Success(AuthenticatedResult(data, cookie)))
             } else {
-                emit(RequestStatus.Error(response.message()))
+                emit(RequestStatus.Error(response.message(), response.code()))
             }
         }
 
     override suspend fun getRemained(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Remained>>> =
         flow {
             emit(RequestStatus.Loading)
-            val response = packagesApi.getRemained(cookie = cookie.toHeaderValue())
-            if (response.isSuccessful) {
-                val data = response.body()!!.toRemained()
+            val msisdnsInfoResponse = packagesApi.getMsisdnsInfo(cookie = cookie.toHeaderValue())
+
+            if (!msisdnsInfoResponse.isSuccessful) {
+                emit(RequestStatus.Error(msisdnsInfoResponse.message(), msisdnsInfoResponse.code()))
+                return@flow
+            }
+
+            val remainedPackagesResponse = packagesApi.getRemained(
+                cookie = cookie.toHeaderValue(),
+                body = RemainedRequestBody(
+                    msisdn = msisdnsInfoResponse.body()!!.first().msisdn
+                )
+            )
+            if (remainedPackagesResponse.isSuccessful) {
+                val data = remainedPackagesResponse.body()!!.toRemained()
                 emit(RequestStatus.Success(AuthenticatedResult(data, cookie)))
             } else {
-                emit(RequestStatus.Error(response.message()))
+                emit(
+                    RequestStatus.Error(
+                        remainedPackagesResponse.message(),
+                        remainedPackagesResponse.code()
+                    )
+                )
             }
         }
 }

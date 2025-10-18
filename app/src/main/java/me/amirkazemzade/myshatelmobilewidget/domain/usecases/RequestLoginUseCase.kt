@@ -1,7 +1,6 @@
 package me.amirkazemzade.myshatelmobilewidget.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
-import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthentication
 import me.amirkazemzade.myshatelmobilewidget.domain.models.LoginRequest
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
@@ -18,7 +17,6 @@ class RequestLoginUseCase @Inject constructor(
         loginRequest: LoginRequest,
     ): Flow<RequestStatus<LoginRequest>> =
         handleAuthenticatedRequestWithCookie(transform = { loginRequest }) { cookie ->
-            if (cookie == null) throw InvalidAuthentication()
             authRepository.requestLoginForUser(
                 cookie,
                 loginRequest.username,

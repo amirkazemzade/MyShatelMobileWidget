@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LoginResponse(
     @SerialName("display_captcha_password")
-    val displayCaptchaPassword: Boolean,
+    val displayCaptchaPassword: Boolean?,
     val message: String,
     val ok: Boolean,
-    val url: String
+    val url: String?,
 )

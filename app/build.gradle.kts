@@ -19,6 +19,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildFeatures.buildConfig = true
     }
 
     buildTypes {
@@ -67,6 +68,7 @@ dependencies {
     implementation(libs.hilt.lifecycle.viewmodel.compose)
     ksp(libs.hilt.android.compiler)
 
+    implementation(libs.logging.interceptor)
     implementation(libs.square.retrofit)
     implementation(libs.square.retrofit.converter.ktx)
     implementation(libs.kotlinx.serialization.json)
@@ -78,5 +80,4 @@ dependencies {
     implementation(libs.valentinilk.shimmer)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
-
 }

@@ -11,15 +11,19 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import me.amirkazemzade.myshatelmobilewidget.BuildConfig
 import me.amirkazemzade.myshatelmobilewidget.data.CookieRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.api.AuthApi
 import me.amirkazemzade.myshatelmobilewidget.data.api.PackagesApi
+import me.amirkazemzade.myshatelmobilewidget.data.interceptors.HtmlRedirectInterceptor
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.AuthRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.PackagesRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.PackagesRepository
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
@@ -40,16 +44,42 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit =
-        Retrofit
+    fun provideOkhttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level =
+                if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                else HttpLoggingInterceptor.Level.BASIC
+        }
+
+        return OkHttpClient.Builder()
+            .addInterceptor(HtmlRedirectInterceptor())
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
+        return Retrofit
             .Builder()
+            .client(okHttpClient)
             .addConverterFactory(
-                Json.asConverterFactory(
-                    "application/json; charset=UTF8".toMediaType()
-                )
+                json
+                    .asConverterFactory(
+                        "application/json; charset=UTF8".toMediaType()
+                    )
             )
             .baseUrl("https://my.shatelmobile.ir/")
             .build()
+    }
 
     @Provides
     @Singleton
