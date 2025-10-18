@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.AppException
+import me.amirkazemzade.myshatelmobilewidget.domain.exceptions.InvalidAuthentication
 import me.amirkazemzade.myshatelmobilewidget.domain.models.AuthenticatedResult
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Cookie
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
@@ -19,34 +20,59 @@ abstract class GeneralUseCase<T>(
     private val cookieRepository: CookieRepository,
     private val tag: String,
 ) {
-    fun handleRequest(request: suspend (cookie: Cookie?) -> Flow<RequestStatus<AuthenticatedResult<T>>>): Flow<RequestStatus<T>> =
-        handleRequest(transform = { it }, request = request)
+    fun handleAuthenticatedRequestWithCookie(request: suspend (cookie: Cookie?) -> Flow<RequestStatus<AuthenticatedResult<T>>>): Flow<RequestStatus<T>> =
+        handleAuthenticatedRequestWithCookie(transform = { it }, request = request)
 
-    fun <R> handleRequest(
+    fun handleAuthenticatedRequest(request: suspend () -> Flow<RequestStatus<AuthenticatedResult<T>>>): Flow<RequestStatus<T>> =
+        handleAuthenticatedRequest(transform = { it }, request = request)
+
+    fun <R> handleAuthenticatedRequestWithCookie(
         transform: (T) -> R,
         request: suspend (cookie: Cookie?) -> Flow<RequestStatus<AuthenticatedResult<T>>>,
     ): Flow<RequestStatus<R>> =
+        handleAuthenticatedRequest(transform, request = { request(cookieRepository.getCookie()) })
+
+    fun <R> handleAuthenticatedRequest(
+        transform: (T) -> R,
+        request: suspend () -> Flow<RequestStatus<AuthenticatedResult<T>>>,
+    ): Flow<RequestStatus<R>> =
         flow {
-            val cookie = cookieRepository.getCookie()
-            request(cookie)
+            request()
                 .onEach { result ->
                     when (result) {
-                        is Success<AuthenticatedResult<T>> -> {
+                        is Success<AuthenticatedResult<T>> if (result.data.cookie != null) -> {
                             cookieRepository.setCookie(result.data.cookie)
                             emit(Success(transform(result.data.data)))
                         }
 
-                        is Error -> emit(Error(result.message))
+                        is Success<AuthenticatedResult<T>> -> {
+                            emit(Error(InvalidAuthentication()))
+                        }
+
+                        is Error -> emit(Error(result.message, result.statusCode))
                         Loading -> emit(Loading)
                     }
                 }
                 .collect()
-        }.catch {
-            if (it is AppException) {
-                emit(Error(it.errorMessage))
+        }.handleExceptions()
+
+    fun handleRequest(
+        request: suspend () -> T,
+    ): Flow<RequestStatus<T>> =
+        flow {
+            emit(Loading)
+            val result = request()
+            emit(Success(result))
+        }.handleExceptions()
+
+
+    private fun <R> Flow<RequestStatus<R>>.handleExceptions(): Flow<RequestStatus<R>> =
+        catch { exception ->
+            if (exception is AppException) {
+                emit(Error(exception.errorMessage))
                 return@catch
             }
-            Log.e(tag, it.message, it)
+            Log.e(tag, exception.message, exception)
             emit(Error("Something went wrong"))
         }
 }

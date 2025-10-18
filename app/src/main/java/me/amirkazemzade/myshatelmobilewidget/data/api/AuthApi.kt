@@ -11,6 +11,12 @@ import retrofit2.http.POST
 
 
 interface AuthApi {
+
+    @GET("/fiscal/id")
+    suspend fun getFiscalId(
+        @Header("Cookie") cookie: String?,
+    ): Response<Unit>
+
     @GET("/captcha/refresh")
     suspend fun captcha(
         @Header("Cookie") cookie: String?,

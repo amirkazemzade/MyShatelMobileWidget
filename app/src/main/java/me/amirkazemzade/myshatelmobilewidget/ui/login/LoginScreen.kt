@@ -15,8 +15,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
-import me.amirkazemzade.myshatelmobilewidget.ui.login.components.LoginPasswordView
-import me.amirkazemzade.myshatelmobilewidget.ui.login.components.LoginRequestView
+import me.amirkazemzade.myshatelmobilewidget.ui.login.loginpassword.LoginPasswordView
+import me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest.LoginRequestView
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
 
 @Composable

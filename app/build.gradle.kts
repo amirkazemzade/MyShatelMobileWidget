@@ -36,6 +36,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+        freeCompilerArgs = listOf("-XXLanguage:+WhenGuards")
     }
     buildFeatures {
         compose = true
@@ -75,4 +76,7 @@ dependencies {
 
     implementation(libs.bumptech.glide)
     implementation(libs.valentinilk.shimmer)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.datastore.preferences)
+
 }

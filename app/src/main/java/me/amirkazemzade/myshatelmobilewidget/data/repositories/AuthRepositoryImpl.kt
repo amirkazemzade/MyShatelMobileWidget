@@ -16,20 +16,32 @@ import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : AuthRepository {
+    override suspend fun checkLoginStatus(
+        cookie: Cookie,
+    ): Flow<RequestStatus<AuthenticatedResult<Unit>>> = flow {
+        emit(RequestStatus.Loading)
+        val response = authApi.getFiscalId(cookie = cookie.toHeaderValue())
+        if (response.isSuccessful) {
+            val cookie = response.headers()["Set-Cookie"]?.toCookie()
+            emit(RequestStatus.Success(AuthenticatedResult(Unit, cookie)))
+        } else {
+            emit(RequestStatus.Error(response.message(), response.code()))
+        }
+    }
+
     override suspend fun getCaptcha(
         cookie: Cookie?,
-    ): Flow<RequestStatus<AuthenticatedResult<CaptchaBase64>>> =
-        flow {
-            emit(RequestStatus.Loading)
-            val response = authApi.captcha(cookie = cookie?.toHeaderValue())
-            if (response.isSuccessful) {
-                val data = response.body()!!.toCaptchaBase64()
-                val cookie = response.headers()["Set-Cookie"]!!.toCookie()
-                emit(RequestStatus.Success(AuthenticatedResult(data, cookie)))
-            } else {
-                emit(RequestStatus.Error(response.message()))
-            }
+    ): Flow<RequestStatus<AuthenticatedResult<CaptchaBase64>>> = flow {
+        emit(RequestStatus.Loading)
+        val response = authApi.captcha(cookie = cookie?.toHeaderValue())
+        if (response.isSuccessful) {
+            val data = response.body()!!.toCaptchaBase64()
+            val cookie = response.headers()["Set-Cookie"]?.toCookie()
+            emit(RequestStatus.Success(AuthenticatedResult(data, cookie)))
+        } else {
+            emit(RequestStatus.Error(response.message(), response.code()))
         }
+    }
 
     override suspend fun requestLoginForUser(
         cookie: Cookie,
@@ -47,7 +59,7 @@ class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : Aut
         if (response.isSuccessful) {
             emit(RequestStatus.Success(AuthenticatedResult(Unit, cookie)))
         } else {
-            emit(RequestStatus.Error(response.message()))
+            emit(RequestStatus.Error(response.message(), response.code()))
         }
     }
 
@@ -71,7 +83,7 @@ class AuthRepositoryImpl @Inject constructor(private val authApi: AuthApi) : Aut
         if (response.isSuccessful) {
             emit(RequestStatus.Success(AuthenticatedResult(Unit, cookie)))
         } else {
-            emit(RequestStatus.Error(response.message()))
+            emit(RequestStatus.Error(response.message(), response.code()))
         }
     }
 }

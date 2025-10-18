@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.ui.login.components
+package me.amirkazemzade.myshatelmobilewidget.ui.login.loginpassword
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +12,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -24,6 +21,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import me.amirkazemzade.myshatelmobilewidget.R
+import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldButton
+import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldColumn
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelDimensions
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
 
@@ -35,9 +34,25 @@ fun LoginPasswordView(
     isLoading: Boolean = false,
 ) {
 
-    var password by remember { mutableStateOf("") }
-    var showPassword by remember { mutableStateOf(false) }
+    val state = remember { LoginPasswordState() }
 
+    LoginPasswordView(
+        state = state,
+        username = username,
+        onLogin = onLogin,
+        modifier = modifier,
+        isLoading = isLoading,
+    )
+}
+
+@Composable
+fun LoginPasswordView(
+    state: LoginPasswordState,
+    username: String,
+    onLogin: (password: String) -> Unit,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
+) {
 
     FieldColumn(modifier = modifier) {
         OutlinedTextField(
@@ -52,23 +67,24 @@ fun LoginPasswordView(
         Box(modifier = Modifier.height(MyShatelDimensions.medium))
 
         OutlinedTextField(
-            value = password,
+            value = state.password,
             label = { Text("Password") },
-            onValueChange = { password = it },
+            onValueChange = state::setPassword,
             shape = MaterialTheme.shapes.large,
-            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+            visualTransformation = if (state.showPassword) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done,
             ),
             keyboardActions = KeyboardActions(
-                onSend = { onLogin(password) }
+                onSend = { callOnLogin(state = state, onLogin = onLogin) }
             ),
             trailingIcon = {
-                IconButton(onClick = { showPassword = !showPassword }) {
+                IconButton(onClick = state::reverseShowPassword) {
                     val id =
-                        if (showPassword) R.drawable.rounded_visibility_24 else R.drawable.rounded_visibility_off_24
-                    val contentDescription = if (showPassword) "Hide password" else "Show password"
+                        if (state.showPassword) R.drawable.rounded_visibility_24 else R.drawable.rounded_visibility_off_24
+                    val contentDescription =
+                        if (state.showPassword) "Hide password" else "Show password"
                     Icon(painter = painterResource(id), contentDescription = contentDescription)
                 }
             },
@@ -80,10 +96,22 @@ fun LoginPasswordView(
         FieldButton(
             isLoading = isLoading,
             text = "Login",
-            onClick = { onLogin(password) },
+            onClick = {
+                callOnLogin(state = state, onLogin = onLogin)
+            },
         )
     }
+
 }
+
+private fun callOnLogin(
+    state: LoginPasswordState,
+    onLogin: (String) -> Unit,
+) {
+    if (!state.validate()) return
+    onLogin(state.password)
+}
+
 
 @PreviewLightDark
 @Composable

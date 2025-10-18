@@ -17,5 +17,5 @@ class FetchCaptchaUseCase @Inject constructor(
 ) : GeneralUseCase<CaptchaBase64>(cookieRepository, TAG) {
 
     operator fun invoke(): Flow<RequestStatus<CaptchaBase64>> =
-        handleRequest { cookie -> authRepository.getCaptcha(cookie) }
+        handleAuthenticatedRequestWithCookie { cookie -> authRepository.getCaptcha(cookie) }
 }

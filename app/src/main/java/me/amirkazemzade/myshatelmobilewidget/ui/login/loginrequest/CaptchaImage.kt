@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.ui.login.components
+package me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

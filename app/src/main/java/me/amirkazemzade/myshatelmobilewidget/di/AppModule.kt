@@ -1,7 +1,10 @@
 package me.amirkazemzade.myshatelmobilewidget.di
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,9 +24,19 @@ import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Singleton
 
+private const val USER_PREFERENCES = "my_shatel_mobile_widget_prefs"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+
+    @Singleton
+    @Provides
+    fun providePreferencesDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create {
+            context.preferencesDataStoreFile(USER_PREFERENCES)
+        }
+    }
 
     @Provides
     @Singleton
@@ -58,11 +71,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        context.getSharedPreferences("my_shatel_mobile_widget_prefs", Context.MODE_PRIVATE)
-
-    @Provides
-    @Singleton
-    fun provideCookieRepository(sharedPreferences: SharedPreferences): CookieRepository =
-        CookieRepositoryImpl(sharedPreferences)
+    fun provideCookieRepository(dataStore: DataStore<Preferences>): CookieRepository =
+        CookieRepositoryImpl(dataStore)
 }

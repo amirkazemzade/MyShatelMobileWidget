@@ -7,9 +7,12 @@ import me.amirkazemzade.myshatelmobilewidget.domain.models.Cookie
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 
 interface AuthRepository {
+
+    suspend fun checkLoginStatus(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Unit>>>
     suspend fun getCaptcha(
         cookie: Cookie? = null,
     ): Flow<RequestStatus<AuthenticatedResult<CaptchaBase64>>>
+
     suspend fun requestLoginForUser(
         cookie: Cookie,
         username: String,
