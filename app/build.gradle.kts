@@ -78,6 +78,7 @@ dependencies {
 
     implementation(libs.bumptech.glide)
     implementation(libs.valentinilk.shimmer)
+    implementation(libs.whatif)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
 }

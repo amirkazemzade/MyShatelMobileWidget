@@ -21,6 +21,7 @@ shimmer = "1.3.3"
 material3 = "1.5.0-alpha06"
 navigationCompose = "2.9.5"
 dataStore = "1.1.7"
+whatif = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +53,7 @@ bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.
 valentinilk-shimmer = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "shimmer" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
+whatif = { module = "com.github.skydoves:whatif-android", version.ref = "whatif" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

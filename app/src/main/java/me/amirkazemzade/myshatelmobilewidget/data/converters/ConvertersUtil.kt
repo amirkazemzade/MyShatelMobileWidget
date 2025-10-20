@@ -47,7 +47,8 @@ fun String.toTraffic(unit: String) = Traffic(
 )
 
 fun RemainedResponse.toRemained() = Remained(
-    traffic = internetUsed.toTraffic(unit = internetUsedUnit)
+    traffic = internetUsed.toTraffic(unit = internetUsedUnit),
+    percentage = internetPercent.first().toFloat()/100,
 )
 
 fun String.toCookie(): Cookie {
