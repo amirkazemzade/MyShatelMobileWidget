@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.data
+package me.amirkazemzade.myshatelmobilewidget.data.repositories
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

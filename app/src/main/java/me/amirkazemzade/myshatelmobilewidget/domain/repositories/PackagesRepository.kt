@@ -8,7 +8,7 @@ import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 
 interface PackagesRepository {
-    suspend fun getPackages(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Array<InternetPackage>>>>
+    fun getPackages(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Array<InternetPackage>>>>
 
-    suspend fun getRemained(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Remained>>>
+    fun getRemained(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Remained>>>
 }

@@ -12,11 +12,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import me.amirkazemzade.myshatelmobilewidget.BuildConfig
-import me.amirkazemzade.myshatelmobilewidget.data.CookieRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.api.AuthApi
 import me.amirkazemzade.myshatelmobilewidget.data.api.PackagesApi
 import me.amirkazemzade.myshatelmobilewidget.data.interceptors.HtmlRedirectInterceptor
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.AuthRepositoryImpl
+import me.amirkazemzade.myshatelmobilewidget.data.repositories.CookieRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.data.repositories.PackagesRepositoryImpl
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.AuthRepository
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepository
@@ -96,7 +96,9 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providePackagesRepository(packagesApi: PackagesApi): PackagesRepository =
+    fun providePackagesRepository(
+        packagesApi: PackagesApi,
+    ): PackagesRepository =
         PackagesRepositoryImpl(packagesApi)
 
     @Provides

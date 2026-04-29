@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.valentinilk.shimmer.shimmer
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Traffic
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.primaryMuteColor
 
 @Composable
@@ -33,17 +33,17 @@ fun DataCircularProgress(
 ) {
     val isLoading = remained == null
     Box(
-        contentAlignment = Alignment.Companion.Center,
+        contentAlignment = Alignment.Center,
     ) {
         DataCircularWavyProgress(remained)
 
-        Column(horizontalAlignment = Alignment.Companion.CenterHorizontally) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             val (amount, unit) = formatRemained(remained)
             Text(
                 amount,
                 style = MaterialTheme.typography.titleMediumEmphasized,
-                fontWeight = FontWeight.Companion.Black,
-                textAlign = TextAlign.Companion.Center,
+                fontWeight = FontWeight.Black,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .whatIfMap(
                         isLoading,
@@ -61,8 +61,8 @@ fun DataCircularProgress(
             Text(
                 unit,
                 style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.Companion.W400,
-                textAlign = TextAlign.Companion.Center,
+                fontWeight = FontWeight.W400,
+                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .whatIfMap(isLoading) {
                         it
@@ -90,7 +90,7 @@ private fun formatRemained(remained: Remained?): Pair<String, String> =
 @Composable
 fun DataCircularProgressPreview() {
     val remained = Remained(traffic = Traffic(amountInMb = 2048), percentage = 0.5f)
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         Surface {
             Column {
                 DataCircularProgress(remained)
@@ -107,7 +107,7 @@ fun DataCircularProgressPreview() {
 @PreviewDynamicColors
 @Composable
 fun DataCircularProgressLoadingPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         Surface {
             Column {
                 DataCircularProgress(null)

@@ -12,9 +12,7 @@ import retrofit2.http.POST
 
 interface PackagesApi {
     @POST("/packages")
-    suspend fun getPackages(
-        @Header("Cookie") cookie: String,
-    ): Response<PackagesResponse>
+    suspend fun getPackages(@Header("Cookie") cookie: String): Response<PackagesResponse>
 
     @POST("/remained")
     suspend fun getRemained(
@@ -23,7 +21,5 @@ interface PackagesApi {
     ): Response<RemainedResponse>
 
     @GET("/termination/msisdns")
-    suspend fun getMsisdnsInfo(
-        @Header("Cookie") cookie: String,
-    ): Response<ArrayList<MsisdnsInfoResponseItem>>
+    suspend fun getMsisdnsInfo(@Header("Cookie") cookie: String): Response<ArrayList<MsisdnsInfoResponseItem>>
 }

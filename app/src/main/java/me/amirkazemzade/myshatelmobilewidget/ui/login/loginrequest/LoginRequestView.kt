@@ -22,7 +22,7 @@ import me.amirkazemzade.myshatelmobilewidget.domain.models.Status
 import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldButton
 import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldColumn
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelDimensions
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @Composable
 fun LoginRequestView(
@@ -128,7 +128,7 @@ private fun callOnLoginRequest(
 @Preview
 @Composable
 fun LoginRequestViewPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         Surface {
             LoginRequestView(
                 captchaState = Status.Idle,

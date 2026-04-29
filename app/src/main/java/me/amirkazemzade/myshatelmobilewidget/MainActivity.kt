@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import me.amirkazemzade.myshatelmobilewidget.ui.AuthStateViewModel
 import me.amirkazemzade.myshatelmobilewidget.ui.navigation.NavGraph
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyShatelMobileWidgetTheme {
+            MyShatelMobileAppTheme {
                 NavGraph(authStateViewModel = authStateViewModel)
             }
         }

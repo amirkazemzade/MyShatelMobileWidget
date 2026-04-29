@@ -18,7 +18,7 @@ import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Status
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Traffic
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
@@ -63,7 +63,7 @@ fun DashboardView(
 private fun DashboardScreenPreview() {
     var isLoggingOut by remember { mutableStateOf(false) }
 
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         DashboardView(
             remainedState = remainedMockSuccessResponse,
             isLoggingOut = isLoggingOut,
@@ -75,7 +75,7 @@ private fun DashboardScreenPreview() {
 @PreviewLightDark
 @Composable
 private fun DashboardScreenLoggingOutPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         DashboardView(
             remainedState = remainedMockSuccessResponse,
             isLoggingOut = true,
@@ -87,7 +87,7 @@ private fun DashboardScreenLoggingOutPreview() {
 @PreviewLightDark
 @Composable
 private fun DashboardScreenErrorPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         DashboardView(
             remainedState = RequestStatus.Error("Error Message"),
             isLoggingOut = false,

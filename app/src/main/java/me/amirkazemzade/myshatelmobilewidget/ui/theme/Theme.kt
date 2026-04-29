@@ -37,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun MyShatelMobileWidgetTheme(
+fun MyShatelMobileAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
@@ -63,7 +63,6 @@ fun MyShatelMobileWidgetTheme(
 val ColorScheme.primaryMuteColor: Color
     @Composable
     get() = colorScheme.onPrimaryContainer.copy(0.5f)
-
 
 
 object MyShatelDimensions {

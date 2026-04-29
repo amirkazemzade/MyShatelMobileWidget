@@ -14,7 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelDimensions
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -45,7 +45,7 @@ fun FieldButton(
 @Composable
 private fun PreviewFieldButton() {
     var isLoading by remember { mutableStateOf(false) }
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         FieldButton(
             text = "Next", isLoading = isLoading, onClick = { isLoading = true })
     }
@@ -54,7 +54,7 @@ private fun PreviewFieldButton() {
 @Preview
 @Composable
 private fun PreviewFieldButtonDisabled() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         FieldButton(
             enabled = false, text = "Next", onClick = { })
     }

@@ -17,7 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.ui.login.loginpassword.LoginPasswordView
 import me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest.LoginRequestView
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @Composable
 fun LoginScreen(
@@ -86,7 +86,7 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 fun LoginViewPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         LoginScreen()
     }
 }

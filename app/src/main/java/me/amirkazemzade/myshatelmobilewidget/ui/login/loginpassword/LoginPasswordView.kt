@@ -24,7 +24,7 @@ import me.amirkazemzade.myshatelmobilewidget.R
 import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldButton
 import me.amirkazemzade.myshatelmobilewidget.ui.login.components.FieldColumn
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelDimensions
-import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileWidgetTheme
+import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
 @Composable
 fun LoginPasswordView(
@@ -116,7 +116,7 @@ private fun callOnLogin(
 @PreviewLightDark
 @Composable
 private fun LoginPasswordViewPreview() {
-    MyShatelMobileWidgetTheme {
+    MyShatelMobileAppTheme {
         Surface {
             LoginPasswordView(
                 username = "123456789",

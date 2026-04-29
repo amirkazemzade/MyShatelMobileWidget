@@ -14,8 +14,10 @@ import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.repositories.PackagesRepository
 
-class PackagesRepositoryImpl(private val packagesApi: PackagesApi) : PackagesRepository {
-    override suspend fun getPackages(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Array<InternetPackage>>>> =
+class PackagesRepositoryImpl(
+    private val packagesApi: PackagesApi,
+) : PackagesRepository {
+    override fun getPackages(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Array<InternetPackage>>>> =
         flow {
             emit(RequestStatus.Loading)
             val response = packagesApi.getPackages(cookie = cookie.toHeaderValue())
@@ -27,7 +29,7 @@ class PackagesRepositoryImpl(private val packagesApi: PackagesApi) : PackagesRep
             }
         }
 
-    override suspend fun getRemained(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Remained>>> =
+    override fun getRemained(cookie: Cookie): Flow<RequestStatus<AuthenticatedResult<Remained>>> =
         flow {
             emit(RequestStatus.Loading)
             val msisdnsInfoResponse = packagesApi.getMsisdnsInfo(cookie = cookie.toHeaderValue())
