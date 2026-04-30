@@ -2,7 +2,9 @@
 
 ## TODO
 - [x] Open app on tap on widget
-- [ ] Neutral color scheme compatibility
+- [x] Neutral color scheme compatibility
+    * The One UI is the issue
+
 - [ ] Google password manager select password cause crash
 - [ ] Login states are lost on configuration change
 - [ ] Settings for widget
