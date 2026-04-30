@@ -1,6 +1,7 @@
 package me.amirkazemzade.myshatelmobilewidget.widgets.remained
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -11,9 +12,12 @@ import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
@@ -31,6 +35,7 @@ import androidx.glance.text.FontStyle
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import me.amirkazemzade.myshatelmobilewidget.MainActivity
 import me.amirkazemzade.myshatelmobilewidget.data.datasource.RemainedLocalDataSource
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Traffic
@@ -54,7 +59,7 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
             GlanceTheme {
                 Content(
                     widgetSize = widgetSize,
-                    remained = remained
+                    remained = remained,
                 )
             }
         }
@@ -65,18 +70,29 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
         widgetSize: DpSize,
         remained: Remained?,
     ) {
+        val context = LocalContext.current
 
         Box(
             modifier = GlanceModifier
                 .fillMaxSize()
                 .cornerRadius(24.dp)
                 .background(GlanceTheme.colors.widgetBackground)
-                .padding(12.dp),
+                .padding(12.dp)
+                .clickable(
+                    onClick = actionStartActivity(
+                        Intent(context, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        }
+                    ),
+                ),
             contentAlignment = Alignment.Center,
         ) {
             when (remained) {
                 null -> NotFoundContent()
-                else -> PercentageContent(widgetSize, remained)
+                else -> PercentageContent(
+                    widgetSize = widgetSize,
+                    remained = remained,
+                )
             }
         }
     }
@@ -113,7 +129,7 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(GlanceTheme.colors.surfaceVariant)
-                .cornerRadius(16.dp),
+                .cornerRadius(16.dp)
         ) {
             val pillColor =
                 if (!isLow) GlanceTheme.colors.primary
@@ -179,7 +195,7 @@ private fun RemainedGlanceWidgetPreviewNoContent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = null
+                remained = null,
             )
         }
     }
@@ -205,7 +221,7 @@ private fun RemainedGlanceWidgetPreview100Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -231,7 +247,7 @@ private fun RemainedGlanceWidgetPreview80Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -257,7 +273,7 @@ private fun RemainedGlanceWidgetPreview60Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -283,7 +299,7 @@ private fun RemainedGlanceWidgetPreview50Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -309,7 +325,7 @@ private fun RemainedGlanceWidgetPreview40Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -335,7 +351,7 @@ private fun RemainedGlanceWidgetPreview33Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -361,7 +377,7 @@ private fun RemainedGlanceWidgetPreview32Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -387,7 +403,7 @@ private fun RemainedGlanceWidgetPreview20Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
@@ -413,7 +429,7 @@ private fun RemainedGlanceWidgetPreview0Percent() {
         ) {
             RemainedGlanceWidget1x4().Content(
                 widgetSize = widgetSize,
-                remained = remained
+                remained = remained,
             )
         }
     }
