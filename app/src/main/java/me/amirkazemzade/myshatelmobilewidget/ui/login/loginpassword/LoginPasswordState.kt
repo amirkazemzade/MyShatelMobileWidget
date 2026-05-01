@@ -1,8 +1,11 @@
 package me.amirkazemzade.myshatelmobilewidget.ui.login.loginpassword
 
+import android.os.Bundle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import androidx.core.os.bundleOf
 
 class LoginPasswordState {
     private var _password by mutableStateOf("")
@@ -30,3 +33,18 @@ class LoginPasswordState {
         _password = value
     }
 }
+
+val LoginPasswordStateSaver = Saver<LoginPasswordState, Bundle>(
+    save = { state ->
+        bundleOf(
+            "password" to state.password,
+            "passwordError" to state.passwordError
+        )
+    },
+    restore = { bundle ->
+        LoginPasswordState().apply {
+            setPassword(bundle.getString("password", ""))
+            passwordError = (bundle.getString("passwordError", ""))
+        }
+    }
+)

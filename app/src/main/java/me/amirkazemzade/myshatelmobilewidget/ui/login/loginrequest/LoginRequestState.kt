@@ -1,8 +1,11 @@
 package me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest
 
+import android.os.Bundle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import androidx.core.os.bundleOf
 
 class LoginRequestState {
     private var _username by mutableStateOf("")
@@ -31,3 +34,22 @@ class LoginRequestState {
         _captcha = value
     }
 }
+
+val LoginRequestStateSaver = Saver<LoginRequestState, Bundle>(
+    save = { state ->
+        bundleOf(
+            "username" to state.username,
+            "captcha" to state.captcha,
+            "usernameError" to state.usernameError,
+            "captchaError" to state.captchaError
+        )
+    },
+    restore = { bundle ->
+        LoginRequestState().apply {
+            setUsername(bundle.getString("username", ""))
+            setCaptcha(bundle.getString("captcha", ""))
+            usernameError = bundle.getString("usernameError")
+            captchaError = bundle.getString("captchaError")
+        }
+    }
+)

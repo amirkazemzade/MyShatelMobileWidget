@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.consumeAsFlow
@@ -20,6 +22,7 @@ import me.amirkazemzade.myshatelmobilewidget.domain.repositories.CookieRepositor
 import me.amirkazemzade.myshatelmobilewidget.domain.usecases.FetchCaptchaUseCase
 import me.amirkazemzade.myshatelmobilewidget.domain.usecases.LoginWithPasswordUseCase
 import me.amirkazemzade.myshatelmobilewidget.domain.usecases.RequestLoginUseCase
+import me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest.LoginEvent
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +33,10 @@ class LoginViewModel @Inject constructor(
     private val loginWithPasswordUseCase: LoginWithPasswordUseCase,
     private val cookieRepository: CookieRepository,
 ) : ViewModel() {
+
+    private val _event = MutableSharedFlow<LoginEvent>()
+    val event = _event.asSharedFlow()
+
     private val _fetchCaptcha = Channel<Unit>(capacity = Channel.CONFLATED)
     val captchaState = _fetchCaptcha
         .consumeAsFlow().flatMapLatest { fetchCaptchaUseCase() }
@@ -60,10 +67,20 @@ class LoginViewModel @Inject constructor(
                     username = username,
                     captchaResult = captchaResult
                 )
-            ).collectLatest {
-                _loginRequestState.value = it
-                if (it is RequestStatus.Error) {
-                    fetchCaptcha()
+            ).collectLatest { newStatus ->
+                _loginRequestState.value = newStatus
+
+                when (newStatus) {
+                    is RequestStatus.Error -> {
+                        fetchCaptcha()
+                        _event.emit(LoginEvent.Error(newStatus.message))
+                    }
+
+                    is RequestStatus.Success<*> -> {
+                        _event.emit(LoginEvent.LoginRequestSuccess)
+                    }
+
+                    RequestStatus.Loading -> {}
                 }
             }
         }
@@ -78,10 +95,20 @@ class LoginViewModel @Inject constructor(
                 username = currentLoginRequestState.data.username,
                 password = password,
                 captchaResult = currentLoginRequestState.data.captchaResult
-            ).collectLatest {
-                _loginWithPasswordState.value = it
-                if (it is RequestStatus.Success) {
-                    setLoggedIn()
+            ).collectLatest { newStatus ->
+                _loginWithPasswordState.value = newStatus
+
+                when (newStatus) {
+                    is RequestStatus.Error -> {
+                        _event.emit(LoginEvent.Error(newStatus.message))
+                    }
+
+                    is RequestStatus.Success<*> -> {
+                        setLoggedIn()
+                        _event.emit(LoginEvent.LoginPasswordSuccess)
+                    }
+
+                    RequestStatus.Loading -> {}
                 }
             }
         }

@@ -6,7 +6,7 @@
     * The One UI is the issue
 
 - [ ] Google password manager select password cause crash
-- [ ] Login states are lost on configuration change
+- [x] Login states are lost on configuration change
 - [ ] Settings for widget
 - [ ] Traffic amount version of widget
 - [ ] Widget preview

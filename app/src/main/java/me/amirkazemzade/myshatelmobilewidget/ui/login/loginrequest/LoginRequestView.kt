@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -32,7 +33,7 @@ fun LoginRequestView(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
 ) {
-    val loginRequestState = remember { LoginRequestState() }
+    val loginRequestState = rememberSaveable(saver = LoginRequestStateSaver) { LoginRequestState() }
 
     LoginRequestView(
         state = loginRequestState,
@@ -92,8 +93,7 @@ fun LoginRequestView(
                 imeAction = ImeAction.Done,
             ),
             keyboardActions = KeyboardActions(
-                onDone = { callOnLoginRequest(state, onLoginRequest) }
-            ),
+                onDone = { callOnLoginRequest(state, onLoginRequest) }),
             singleLine = true,
             isError = state.captchaError != null,
             supportingText = {

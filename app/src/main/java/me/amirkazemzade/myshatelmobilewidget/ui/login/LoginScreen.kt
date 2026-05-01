@@ -16,6 +16,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.ui.login.loginpassword.LoginPasswordView
+import me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest.LoginEvent
 import me.amirkazemzade.myshatelmobilewidget.ui.login.loginrequest.LoginRequestView
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
 
@@ -28,29 +29,27 @@ fun LoginScreen(
     val loginRequestState by loginViewModel.loginRequestState.collectAsStateWithLifecycle()
     val loginWithPasswordState by loginViewModel.loginWithPasswordState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(loginRequestState) {
-        if (loginRequestState is RequestStatus.Success) {
-            Toast.makeText(context, "Login Requested Successfully", Toast.LENGTH_SHORT).show()
-        }
-        if (loginRequestState is RequestStatus.Error) {
-            Toast.makeText(
-                context,
-                (loginRequestState as RequestStatus.Error).message,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
+    LaunchedEffect(Unit) {
+        loginViewModel.event.collect { event ->
+            when (event) {
+                is LoginEvent.Error -> Toast.makeText(
+                    context,
+                    (loginRequestState as RequestStatus.Error).message,
+                    Toast.LENGTH_SHORT
+                ).show()
 
-    LaunchedEffect(loginWithPasswordState) {
-        if (loginWithPasswordState is RequestStatus.Success) {
-            Toast.makeText(context, "Logged In Successfully", Toast.LENGTH_SHORT).show()
-        }
-        if (loginWithPasswordState is RequestStatus.Error) {
-            Toast.makeText(
-                context,
-                (loginWithPasswordState as RequestStatus.Error).message,
-                Toast.LENGTH_SHORT
-            ).show()
+                LoginEvent.LoginRequestSuccess -> Toast.makeText(
+                    context,
+                    "Login Requested Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                LoginEvent.LoginPasswordSuccess -> Toast.makeText(
+                    context,
+                    "Logged In Successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 

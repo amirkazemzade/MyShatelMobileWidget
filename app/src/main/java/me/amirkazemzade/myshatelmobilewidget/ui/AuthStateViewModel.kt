@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.stateIn
-import me.amirkazemzade.myshatelmobilewidget.domain.models.Status
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
+import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.usecases.CheckAuthUseCase
+import me.amirkazemzade.myshatelmobilewidget.ui.navigation.Screen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +18,18 @@ class AuthStateViewModel @Inject constructor(
 ) : ViewModel() {
 
     val authState = checkAuthUseCase()
-        .stateIn(
-            viewModelScope, SharingStarted.WhileSubscribed(500), Status.Idle
+        .map { state ->
+            when (state) {
+                is RequestStatus.Success -> Screen.Dashboard.route
+                is RequestStatus.Error -> Screen.Login.route
+                else -> null
+            }
+        }
+        .filterNotNull()
+        .shareIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            replay = 0
         )
 
 }
