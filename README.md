@@ -10,5 +10,5 @@
 - [ ] Settings for widget
 - [ ] Traffic amount version of widget
 - [ ] Widget preview
-- [ ] App logo
+- [x] App logo
 - [ ] Complete the readme file
