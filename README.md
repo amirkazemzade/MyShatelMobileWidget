@@ -19,6 +19,7 @@ happy to review and merge your Pull Request.
 - [x] Login states are lost on configuration change
 - [ ] Settings for widget
 - [ ] Traffic amount version of widget
-- [ ] Widget preview
+- [x] Widget preview
 - [x] App logo
 - [ ] Complete the readme file
+- [ ] Add full Farsi translations

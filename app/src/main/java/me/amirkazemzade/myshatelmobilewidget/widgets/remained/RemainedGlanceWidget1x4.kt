@@ -54,8 +54,8 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
 
         provideContent {
             val remained by dataSource.remainedData.collectAsState(initial = null)
-
             val widgetSize = LocalSize.current
+
             GlanceTheme {
                 Content(
                     widgetSize = widgetSize,
@@ -63,6 +63,27 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
                 )
             }
         }
+    }
+
+    override suspend fun providePreview(
+        context: Context,
+        widgetCategory: Int,
+    ) {
+        provideContent {
+            val remained = Remained(
+                traffic = Traffic(7 * 1024),
+                percentage = 0.67f,
+            )
+            val widgetSize = LocalSize.current
+
+            GlanceTheme {
+                Content(
+                    widgetSize = widgetSize,
+                    remained = remained,
+                )
+            }
+        }
+
     }
 
     @Composable
@@ -175,6 +196,7 @@ class RemainedGlanceWidget1x4 : GlanceAppWidget() {
                 }
             }
         }
+
     }
 }
 

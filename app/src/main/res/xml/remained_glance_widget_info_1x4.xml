@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-        android:description="@string/app_name"
+        android:description="@string/remained_internet"
         android:minWidth="245dp"
         android:minHeight="56dp"
         android:targetCellWidth="4"
         android:targetCellHeight="1"
         android:updatePeriodMillis="86400000"
         android:initialLayout="@layout/glance_default_loading_layout"
-        android:previewLayout="@layout/glance_default_loading_layout"
+        android:previewImage="@drawable/remained_widget_preview"
         android:resizeMode="horizontal" />
