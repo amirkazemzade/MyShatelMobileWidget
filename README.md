@@ -18,7 +18,7 @@ happy to review and merge your Pull Request.
 - [ ] Google password manager select password cause crash
 - [x] Login states are lost on configuration change
 - [ ] Settings for widget
-- [ ] Traffic amount version of widget
+- [x] Traffic amount version of widget
 - [x] Widget preview
 - [x] App logo
 - [ ] Complete the readme file

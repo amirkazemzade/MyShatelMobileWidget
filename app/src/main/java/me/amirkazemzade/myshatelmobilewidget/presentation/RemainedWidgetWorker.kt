@@ -14,7 +14,7 @@ import me.amirkazemzade.myshatelmobilewidget.data.datasource.RemainedLocalDataSo
 import me.amirkazemzade.myshatelmobilewidget.domain.models.Remained
 import me.amirkazemzade.myshatelmobilewidget.domain.models.RequestStatus
 import me.amirkazemzade.myshatelmobilewidget.domain.usecases.FetchRemainedUseCase
-import me.amirkazemzade.myshatelmobilewidget.widgets.remained.RemainedGlanceWidget1x4
+import me.amirkazemzade.myshatelmobilewidget.ui.widgets.remained.RemainedGlanceWidget1x4
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
 

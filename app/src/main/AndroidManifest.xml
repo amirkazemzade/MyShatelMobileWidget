@@ -24,8 +24,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".WidgetConfigActivity"
+                android:exported="true"
+                android:theme="@style/Theme.WidgetConfig">
+        </activity>
+
         <receiver
-                android:name=".widgets.remained.RemainedGlanceWidgetReceiver1x4"
+                android:name=".ui.widgets.remained.RemainedGlanceWidgetReceiver1x4"
                 android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

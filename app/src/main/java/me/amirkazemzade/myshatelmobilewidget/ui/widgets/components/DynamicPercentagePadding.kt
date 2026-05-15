@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.widgets.components
+package me.amirkazemzade.myshatelmobilewidget.ui.widgets.components
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.lerp

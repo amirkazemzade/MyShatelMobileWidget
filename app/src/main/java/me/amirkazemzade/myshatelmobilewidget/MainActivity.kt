@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.amirkazemzade.myshatelmobilewidget.ui.AuthStateViewModel
 import me.amirkazemzade.myshatelmobilewidget.ui.navigation.NavGraph
 import me.amirkazemzade.myshatelmobilewidget.ui.theme.MyShatelMobileAppTheme
-import me.amirkazemzade.myshatelmobilewidget.widgets.remained.setRemainedWidgetPreview
+import me.amirkazemzade.myshatelmobilewidget.ui.widgets.remained.setRemainedWidgetPreview
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

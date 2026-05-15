@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.widgets.remained
+package me.amirkazemzade.myshatelmobilewidget.ui.widgets.remained
 
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver

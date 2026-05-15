@@ -1,4 +1,4 @@
-package me.amirkazemzade.myshatelmobilewidget.widgets.remained
+package me.amirkazemzade.myshatelmobilewidget.ui.widgets.remained
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
