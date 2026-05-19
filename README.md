@@ -1,4 +1,9 @@
-# My Shatel Mobile Widget
+# Net Widget
+
+A home screen Android widget to track and monitor your remaining mobile internet quota.
+
+## Supported Operators
+Currently, it only supports **Shatel Mobile**.
 
 ## Supported Android Version
 
@@ -17,9 +22,10 @@ happy to review and merge your Pull Request.
 
 - [ ] Google password manager select password cause crash
 - [x] Login states are lost on configuration change
-- [ ] Settings for widget
+- [x] Settings for widget
 - [x] Traffic amount version of widget
 - [x] Widget preview
 - [x] App logo
 - [ ] Complete the readme file
-- [ ] Add full Farsi translations
+- [x] Add full Farsi translations
+- [x] Rename the project

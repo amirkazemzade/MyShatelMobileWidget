@@ -1,0 +1,5 @@
+package me.amirkazemzade.netwidget.domain.models
+
+sealed interface Status<out T> {
+    object Idle : Status<Nothing>
+}

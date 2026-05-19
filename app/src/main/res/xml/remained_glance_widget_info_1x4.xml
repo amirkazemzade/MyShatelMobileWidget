@@ -9,5 +9,5 @@
         android:initialLayout="@layout/glance_default_loading_layout"
         android:previewImage="@drawable/remained_widget_preview"
         android:resizeMode="horizontal"
-        android:configure="me.amirkazemzade.myshatelmobilewidget.WidgetConfigActivity"
+        android:configure="me.amirkazemzade.netwidget.WidgetConfigActivity"
         android:widgetFeatures="reconfigurable"/>

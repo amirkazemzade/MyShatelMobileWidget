@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "me.amirkazemzade.myshatelmobilewidget"
+    namespace = "me.amirkazemzade.netwidget"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "me.amirkazemzade.myshatelmobilewidget"
+        applicationId = "me.amirkazemzade.netwidget"
         minSdk = 31
         targetSdk = 36
         versionCode = 1
@@ -40,6 +40,10 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+    }
+    androidResources {
+        @Suppress("UnstableApiUsage")
+        generateLocaleConfig = true
     }
 }
 

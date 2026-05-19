@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">نت ویجت</string>
+    <string name="remained_internet">اینترنت باقی‌مانده</string>
+    <string name="dashboard">داشبورد</string>
+    <string name="data">داده</string>
+    <string name="username">نام کاربری</string>
+    <string name="password">رمز عبور</string>
+    <string name="captcha">کپچا</string>
+    <string name="continue_action">ادامه</string>
+    <string name="login">ورود</string>
+    <string name="login_requested_successfully">درخواست ورود با موفقیت ثبت شد</string>
+    <string name="logged_in_successfully">ورود با موفقیت انجام شد</string>
+    <string name="username_required">نام کاربری الزامی است</string>
+    <string name="password_required">رمز عبور الزامی است</string>
+    <string name="enter_captcha">کپچا را وارد کنید</string>
+    <string name="error">خطا</string>
+    <string name="refresh">تازه‌سازی</string>
+    <string name="retry">تلاش دوباره</string>
+    <string name="logout">خروج</string>
+    <string name="reload_remained">بارگذاری دوباره مقدار داده باقی‌مانده</string>
+    <string name="hide_password">پنهان کردن رمز عبور</string>
+    <string name="show_password">نمایش رمز عبور</string>
+    <string name="no_content_available">محتوایی در دسترس نیست</string>
+    <string name="gigabyte_short">گیگابایت</string>
+    <string name="megabyte_short">مگابایت</string>
+    <string name="navigate_back">بازگشت</string>
+    <string name="customize_widget">شخصی سازی ویجت</string>
+    <string name="save">ذخیره</string>
+    <string name="data_display_mode">حالت نمایش داده</string>
+    <string name="percentage">درصد</string>
+    <string name="traffic">حجم</string>
+    <string name="preview">پیش نمایش</string>
+</resources>

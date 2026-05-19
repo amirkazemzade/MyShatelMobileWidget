@@ -1,0 +1,13 @@
+package me.amirkazemzade.netwidget.domain.models
+
+data class Traffic(
+    val amountInMb: Long,
+) {
+    fun toMB(): Long = amountInMb
+    fun toGB(): Float = amountInMb * 1f / 1024
+
+    fun toReadableText(): String {
+        if (amountInMb >= 1024) return "%.2f GB".format(toGB())
+        return "${toMB()} MB"
+    }
+}
